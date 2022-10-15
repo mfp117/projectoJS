@@ -1,45 +1,59 @@
-function simuladorPrestamo(){
+const consultantes = [];
+let maximoNroDeCuotas = 12;
+let mensajeAMostrar = "El monto a pagar seria\n";
+let deseaSeguir = "";
 
-  let montoIngresado = parseInt(prompt("Ingrese la suma"));
-  let maximoNroDeCuotas = 12;
-  let mensajeAMostrar = "El monto a pagar seria\n";
-  
+
+do {
+  // -- inicializo persona --
+  let persona = {
+    nombre: "",
+    apellido: "",
+    monto: 0,
+    cuotas: 0,
+  };
+
+  // -- pedir info a la persona --
+  persona.nombre = prompt("Ingrese su nombre");
+  persona.apellido = prompt("Ingrese su apellido");
+  alert("Se ha creado el cliente");
+
+  // -- pido el monto que la persona desea --
+  persona.monto = parseInt(prompt("Ingrese el monto deseado"));
+
+  // -- genero mensaje a mostrar --
   for (let cuota = 1; cuota <= maximoNroDeCuotas; cuota++) {
-    let resultado = montoIngresado / cuota;
-    mensajeAMostrar = mensajeAMostrar + montoIngresado + "/" + cuota + " = " + resultado + "\n";
-    
+    let resultado = persona.monto / cuota;
+    mensajeAMostrar = mensajeAMostrar + persona.monto + "/" + cuota + " = " + resultado + "\n";
+
     if (cuota === maximoNroDeCuotas) {
       alert(mensajeAMostrar);
     }
   }
+
+  // -- pido cuantas cuotas quiere el cliente --
+  let cuotasIngresadas = 0;
+  do {
+    cuotasIngresadas = parseInt(prompt("Ingrese la cantidad de cuotas: 1 a 12"));
+    
+    if (cuotasIngresadas > 12) {
+        alert("El maximo de cuotas disponible es 12");
+    }
+    console.log("cuotas ingresadas: ", cuotasIngresadas);
+  } 
+  while (cuotasIngresadas > 12); persona.cuotas = cuotasIngresadas;
+
+  console.log("persona creada: ", persona);
+
+  // -- Agrego a la persona al array de personas -
+  consultantes.push(persona);
+  console.log("consultantes: ", consultantes);
   
-  let cuotas = parseInt(prompt("Seleccione cantidad de cuotas (1 a 12)"));
-  
-  if (cuotas === 1) {
-    alert("Usted abonara un pago de" + " " + "$" + montoIngresado);
-  }
-  
-  if (cuotas < 13) {
-    alert(
-      "Usted abonara" + " " + cuotas + " " + "pagos de $" + parseFloat(montoIngresado / cuotas));
-  }
-  
-  if (cuotas > 12) {
-    alert("El maximo de cuotas disponible es 12");
-  }
+  console.log(consultantes.length)
+  const reporte = consultantes.filter((el)=> el.cuotas > 6)
+  console.log("Solicitudes con mas de 6 pagos", reporte)
 
-menu = prompt("Desea realizar otra operacion? \n [s] si \n [n] no");
-
-if (menu == "s") {
-  simuladorPrestamo();  
-}
-
-else (menu == "n"); {
-  document.write("Hasta la proxima!")
-}
-
-}
-
-simuladorPrestamo();
-
-
+  // -- Preguntar si quiere seguir --
+  deseaSeguir = prompt("Ingrese 's' para realizar otra consulta o cualquier otra tecla para finalizar");
+} 
+while (deseaSeguir === "s");
